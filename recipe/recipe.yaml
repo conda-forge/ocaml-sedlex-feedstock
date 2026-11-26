@@ -1,8 +1,8 @@
 context:
   version: "3.8.1"
-  build_number: 0
+  build_number: 1
 
-  # ocaml_win-64 ships gcc_* and vs2022_* at the same version/build; name the track.
+  # ocaml_win-64 ships gcc_* and vs_* at the same version/build; name the track.
   c_toolchain: ${{ "" if unix else c_compiler ~ "_*" }}
   library: ${{ "Library/" if not unix else "" }}
 
@@ -41,10 +41,10 @@ requirements:
         - ${{ stdlib("m2w64_c") }}
       else:
         - ${{ stdlib("c") }}
-    # ocaml_win-64 >=14 only run-constrains the C compiler; activate it here, once (vs2022, zig)
+    # ocaml_win-64 >=14 only run-constrains the C compiler; activate it here, once (vs, zig)
     - if: not unix and c_compiler != "gcc"
       then:
-        - ${{ compiler("c") }}
+        - ${{ compiler("zig") if c_compiler == "zig" else compiler("c") }}
     # compiler("ocaml") renders no toolchain track; name it on windows
     - if: not unix
       then:

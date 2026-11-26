@@ -1,18 +1,10 @@
-# Local override: gives windows two toolchain lanes (vs2022/gcc) on x86_64 and
+# Local override: gives windows two toolchain lanes (vs/gcc) on x86_64 and
 # a zig lane on arm64.
-# c_compiler_version is pinned per lane because pinning now sets 2022 on win.
 c_compiler:
   - if: not unix and x86_64
     then:
-      - vs2022
+      - vs
       - gcc
   - if: not unix and arm64
     then:
       - zig
-c_compiler_version:
-  - if: not unix and x86_64
-    then:
-      - "19"
-  - if: not unix and arm64
-    then:
-      - "0.17"
